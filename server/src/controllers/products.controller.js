@@ -24,8 +24,15 @@ export const getProduct = async (req, res) => {
 };
 
 export const getAllProducts = async (req, res) => {
+
+    const queryFilter = {};
+
+    const { categoryId} = req.query;
+
+    if (categoryId) queryFilter.categoryIds = [ categoryId ];
+
     try {
-        const products = await Product.find().populate('categories');
+        const products = await Product.find(queryFilter);
         res.status(200).json({ products });
     } catch (error) {
         console.error('Get All Products error:', error);
