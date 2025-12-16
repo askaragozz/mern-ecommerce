@@ -1,6 +1,6 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import { authRouter, productRouter, categoryRouter } from './routes/routes.js';
+import { apiRouter, adminRouter } from './routes/routes.js';
 
 const app = express();
 
@@ -10,8 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 //Routes
-app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/products', productRouter);
-app.use('/api/v1/categories', categoryRouter);
+app.use('/api', apiRouter);
+app.use('/api/admin', adminRouter);
 
 export { app };
