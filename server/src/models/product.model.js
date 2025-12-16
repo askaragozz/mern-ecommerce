@@ -23,21 +23,19 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
-
+const Product = model('Product', productSchema);
 
 // Products can only be added to leaf level categories!
 productSchema.pre('save', async function (next) {
     try {
         const isLeaf = await Category.isLeaf(this._id);
-        if (!isLeaf) return next(new Error("Product must belong to a leaf category"));
-        next()
+        if (!isLeaf) next(new Error("Product must belong to a leaf category"));
+        next();
     } catch (error) {
         console.error("Error saving product:", error);
         next(error);
     }
 
 });
-
-const Product = model('Product', productSchema);
 
 export default Product;
