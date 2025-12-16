@@ -3,9 +3,13 @@ import mongoose from "mongoose";
 const { Schema, model } = mongoose;
 
 const productSchema = new Schema({
-    name: {
+    title: {
         type: String,
         required: true,
+        trim: true
+    },
+    description: {
+        type: String,
         trim: true
     },
     price: {
@@ -13,21 +17,24 @@ const productSchema = new Schema({
         required: true,
         min: 0
     },
-    description: {
-        type: String,
-        trim: true
+    "stock": {
+        type: Number,
+        required: true,
+        min: 0
     },
-    inStock: {
-        type: Boolean,
-        default: true
-    },
-    categories: [{
+    categoryIds: [{
         type: Schema.Types.ObjectId,
         ref: 'Category',
         index: true,
         required: true
-    }]
+    }],
+    isActive: {
+        type: Boolean,
+        default: true
+    }
 }, { timestamps: true
 });
 
-export const Product = model('Product', productSchema);
+const Product = model('Product', productSchema);
+
+export default Product;

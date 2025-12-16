@@ -9,11 +9,15 @@ const categorySchema = new Schema({
         trim: true,
         unique: true
     },
-    description: {
+    slug: {
         type: String,
-        trim: true
+        required: true,
+        trim: true,
+        unique: true
     }
 }, { timestamps: true
 });
 
-export const Category = model('Category', categorySchema);
+const Category = model('Category', categorySchema);
+
+export default Category;
