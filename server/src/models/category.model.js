@@ -14,6 +14,11 @@ const categorySchema = new Schema({
         required: true,
         trim: true,
         unique: true
+    },
+    topCategoryId: {
+        type: Schema.Types.ObjectId,
+        ref: 'TopCategory',
+        default: null
     }
 }, { timestamps: true
 });
