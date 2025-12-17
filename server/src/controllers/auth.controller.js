@@ -10,24 +10,14 @@ export const register = async (req, res) => {
 
         const passwordHash = await bcrypt.hash(password, 10);
 
-        const newUser = await User.create({
-            name, 
-            surname, 
-            email, 
-            password: passwordHash 
-        });
-        
+        const newUser = await User.create({ name,  surname,  email,  password: passwordHash, role: "customer" });
+
         const tokens = await issueTokens(newUser);
         setAuthCookies(res, tokens);
 
         res.status(201).json({ 
             message: 'User registered successfully',
-            user: {
-                id: newUser._id,
-                name: newUser.name,
-                surname: newUser.surname,
-                email: newUser.email,
-            } 
+            user: { id: newUser._id, name: newUser.name, surname: newUser.surname, email: newUser.email, role: newUser.role} 
         });
 
     } catch (error) {
