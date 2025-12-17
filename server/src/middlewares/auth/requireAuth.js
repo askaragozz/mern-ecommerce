@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../../models/user.model.js';
+import { JWT_ACCESS_KEY } from '../../config/env.js';
 
 export const requireAuth = async (req, res, next) => {
     const accessToken = req.cookies?.accessToken;
@@ -8,8 +9,8 @@ export const requireAuth = async (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(accessToken, process.env.ACCESS_TOKEN_SECRET);
-        const user = await User.findById(decoded);
+        const decoded = jwt.verify(accessToken, JWT_ACCESS_KEY);
+        const user = await User.findById(decoded.id);
         req.user = { id: user._id, role: user.role };
         next();
     } catch (error) {
