@@ -8,12 +8,6 @@ const userSchema =  new mongoose.Schema({
         trim: true,
         maxLength: [50, "Username cannot exceed 50 characters"]
     },
-    surname: {
-        type: String,
-        required: true,
-        trim: true,
-        maxLength: [50, "Surname cannot exceed 50 characters"]
-    },
     email: {
         type: String,
         required: true,
@@ -26,6 +20,13 @@ const userSchema =  new mongoose.Schema({
         type: String,
         required: true,
         minLength: [6, "Password must be at least 6 characters long"]
+    },
+    role: {
+        type: String,
+        required: true,
+        enum: ["customer", "admin"],
+        default: "customer",
+        index: true
     },
     refreshTokenHash: {
         type: String,
