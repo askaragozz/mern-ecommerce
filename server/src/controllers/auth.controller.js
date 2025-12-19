@@ -59,7 +59,6 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-    // Clear refresh tokens from database and cookies
     try {
         const token = req.cookies?.refreshToken;
         if (token) {

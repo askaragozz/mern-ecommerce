@@ -65,4 +65,29 @@ export const deleteProduct = async (req, res) => {
     }
 };
 
+//Attribute actions
+import { normalizeAttributes } from '../helpers/product.helper.js';
 
+export const setAttributes = async (req, res) => {
+
+    try {
+        const { productId } = req.params
+        const { attributeArr } = req.body;
+
+        const attributes = normalizeAttributes(attributeArr);
+
+        const product = await Product.findByIdAndUpdate(
+            productId,
+            { $set: { attributes } },
+            { new: true, runValidators: true }
+        );
+
+        if (!product) return res.status(404).json({ message: 'Product not found' });
+
+        return res.status(200).json({ message: 'Attributes updated', product });
+    } catch (error) {
+        console.error('Error setting attributes', error);
+        return res.status(500).json({ message: 'Error setting attributes' });
+    }
+
+}

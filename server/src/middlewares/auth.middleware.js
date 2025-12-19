@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import User from '../../models/user.model.js';
-import { JWT_ACCESS_KEY } from '../../config/env.js';
+import User from '../models/user.model.js';
+import { JWT_ACCESS_KEY } from '../config/env.js';
 
 export const requireAuth = async (req, res, next) => {
     const accessToken = req.cookies?.accessToken;
@@ -17,3 +17,9 @@ export const requireAuth = async (req, res, next) => {
         return res.status(401).json({ message: `Invalid or expired token, Error => ${error}`});
     }
 }
+
+export const requireAdmin = (req, res, next) => {
+  if (!req.user) return res.status(401).json({ message: 'Unauthorized' });
+  if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
+  return next();
+};
