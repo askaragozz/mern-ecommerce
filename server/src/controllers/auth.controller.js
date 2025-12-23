@@ -43,7 +43,6 @@ export const login = async (req, res) => {
         setAuthCookies(res, tokens);
 
         res.status(200).json({ 
-            message: 'Login successful',
             user: {
                 id: user._id,
                 name: user.name,
