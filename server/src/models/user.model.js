@@ -47,7 +47,6 @@ userSchema.pre('save', function(next) {
         console.log(error);
         next(error);
     }
-
 });
 
 export default User;
